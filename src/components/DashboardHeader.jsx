@@ -1,6 +1,6 @@
 import React from 'react'
 import { RxCrossCircled } from "react-icons/rx";
-const DashboardHeader = ({selectedTab,handelTabChange}) => {
+const DashboardHeader = ({selectedTab,handelTabChange,openModal}) => {
   return (
     <div className="relative mt-7 sm:mt-2">
 
@@ -14,7 +14,7 @@ const DashboardHeader = ({selectedTab,handelTabChange}) => {
 
           <div className="flex flex-grow"></div>
 
-          <button className="flex items-center gap-1 h-auto w-auto rounded-7 bg-red-300 p-2 rounded-md"><span className="text-red-600 font-medium text-sm "><RxCrossCircled /></span><span className="text-red-600 font-medium text-sm">Close account</span></button>
+          <button onClick={openModal} className="flex items-center gap-1 h-auto w-auto rounded-7 bg-red-300 p-2 rounded-md"><span className="text-red-600 font-medium text-sm "><RxCrossCircled /></span><span className="text-red-600 font-medium text-sm">Close account</span></button>
         </div>
       </div>
   )
