@@ -33,7 +33,7 @@ const DashboardFilters = ({
   const [openRiskValue, setOpenRiskValue] = useState(false);
 
   return (
-    <div className="mt-9 w-fit flex flex-col sm:flex-row gap-3 justify-center align-center m-auto">
+    <div className="mt-9 w-fit sm:w-full flex flex-col sm:flex-row gap-3 sm:justify-start  align-baseline items-baseline m-auto">
       {/* Search Bar */}
       <div className="relative">
         <input

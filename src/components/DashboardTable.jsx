@@ -2,11 +2,11 @@ import React from "react";
 import { RiExternalLinkLine } from "react-icons/ri";
 import { FaCircle } from "react-icons/fa";
 import UpDownIcon from "../assets/UpDownIcon.svg";
-const DashboardTable = ({ selectedTab, filteredData }) => {
+const DashboardTable = ({ selectedTab, DashboardData }) => {
   return (
     <>
       <div className="overflow-x-auto sm:overflow-x-hidden w-full mt-5">
-        {filteredData()?.length > 0 ? (
+        {DashboardData?.length > 0 ? (
           <table className="text-gray-500  w-full border border-slate-200">
             <thead className="text-xs text-black font-medium text-left bg-neutral-100 border border-slate-300 ">
               <tr>
@@ -15,7 +15,11 @@ const DashboardTable = ({ selectedTab, filteredData }) => {
                 <th className=" px-6">
                   <span className="flex gap-1  ">
                     Risk level
-                    <img className="" src={UpDownIcon} alt="UpDownIcon" />
+                    <img
+                      className="cursor-pointer"
+                      src={UpDownIcon}
+                      alt="UpDownIcon"
+                    />
                   </span>
                 </th>
 
@@ -61,7 +65,7 @@ const DashboardTable = ({ selectedTab, filteredData }) => {
             </thead>
 
             <tbody>
-              {filteredData()?.map((data) => {
+              {DashboardData?.map((data) => {
                 return (
                   <tr className="bg-white border-b text-center " key={data.id}>
                     <td className="flex items-center justify-between  text-left  pl-6 pr-4  py-4">
@@ -155,7 +159,7 @@ const DashboardTable = ({ selectedTab, filteredData }) => {
             </tbody>
           </table>
         ) : (
-          <p>No Results Found</p>
+          <p className="h-screen text-center mt-8 font-bold text-xl">No Results Found</p>
         )}
       </div>
     </>
