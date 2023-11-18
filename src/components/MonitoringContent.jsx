@@ -12,11 +12,13 @@ const MonitoringContent = () => {
   const[searchInput,setSearchInput]=useState("");
 
   const [triggerFilterValue, setTriggerFilterValue] = useState(null);
+  const [actionFilterValue, setActionFilterValue] = useState(null);
 
-
+  
   const handelTabChange=(newTabValue)=>{
     setSelectedTab(newTabValue);
-    setTriggerFilterValue(null)
+    setTriggerFilterValue(null);
+    setActionFilterValue(null);
   }
   const openModal=()=>{
     setShowModal(true)
@@ -34,8 +36,12 @@ const MonitoringContent = () => {
       finalResult=searchFilteredData
     }
     if(triggerFilterValue){
-      let triggerFilterData=finalResult.filter(({triggerReason})=>triggerReason===triggerFilterValue);
-        finalResult=triggerFilterData
+      finalResult=finalResult.filter(({triggerReasonValue})=>triggerReasonValue===triggerFilterValue);
+       
+    }
+    if(actionFilterValue){
+      finalResult=finalResult.filter(({actionReason})=>actionReason===actionFilterValue);
+        
     }
 
     return finalResult
@@ -46,7 +52,7 @@ const MonitoringContent = () => {
       <p className="text-3xl font-medium sm:mt-12 mt-4">Monitoring</p>
     <DashboardHeader selectedTab={selectedTab} handelTabChange={handelTabChange} openModal={openModal}/>
 
-    <DashboardFilters searchInput={searchInput} setSearchInput={setSearchInput} selectedTab={selectedTab} triggerFilterValue={triggerFilterValue} setTriggerFilterValue={setTriggerFilterValue}/>
+    <DashboardFilters searchInput={searchInput} setSearchInput={setSearchInput} selectedTab={selectedTab} triggerFilterValue={triggerFilterValue} setTriggerFilterValue={setTriggerFilterValue} actionFilterValue={actionFilterValue} setActionFilterValue={setActionFilterValue}/>
 
     <DashboardTable selectedTab={selectedTab} filteredData={filteredData}/>
 
