@@ -60,7 +60,7 @@ const MonitoringContent = () => {
   let DashboardData = filteredData();
 
   return (
-    <div className="sm:ml-80 sm:mr-12 ml-16 mx-2 w-full overflow-x-hidden">
+    <div className="sm:ml-72 sm:mr-12 ml-16 mx-2 w-full overflow-x-hidden">
       <p className="text-3xl font-medium sm:mt-12 mt-4">Monitoring</p>
       <DashboardHeader
         selectedTab={selectedTab}

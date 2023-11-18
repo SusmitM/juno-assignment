@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
+import { IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
+
+const ReasonValues = ["Flagging logics triggered", "Flagged", "Closed"];
 const CloseAccountModal = ({ closeModal }) => {
   const [accountData, setAccountData] = useState({
     email: "",
@@ -8,6 +12,8 @@ const CloseAccountModal = ({ closeModal }) => {
     note: "",
     closureFees: "",
   });
+
+  const [openReasonTab, setOpenReasonTab] = useState(false);
 
   const isFormFilled = () => {
     for (let formItem in accountData) {
@@ -19,8 +25,10 @@ const CloseAccountModal = ({ closeModal }) => {
   };
 
   const handelFormSubmit = (e) => {
-    e.preventDefault()
-    closeModal()
+    e.preventDefault();
+    if (isFormFilled()) {
+      closeModal();
+    }
   };
 
   return (
@@ -42,7 +50,7 @@ const CloseAccountModal = ({ closeModal }) => {
           <div className="modal-body mt-8">
             <label
               htmlFor="email"
-              className="block mb-2 text-sm font-semibold text-gray-400"
+              className="block mb-2 text-sm font-normal text-gray-400"
             >
               Email
             </label>
@@ -50,7 +58,7 @@ const CloseAccountModal = ({ closeModal }) => {
               type="email"
               id="email"
               name="email"
-              className="appearance-none border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-indigo-500 w-full"
+              className="bg-white border border-gray-300 text-black p-2 rounded focus:outline-none focus:border-indigo-500 w-full"
               placeholder="Enter your email"
               onChange={(e) => {
                 setAccountData((prev) => ({ ...prev, email: e.target.value }));
@@ -58,7 +66,7 @@ const CloseAccountModal = ({ closeModal }) => {
             />
 
             <div className="flex gap-x-9 items-baseline mt-6">
-              <p className="text-sm text-black text-sm font-medium ">
+              <p className="text-black text-sm font-medium ">
                 Want to file UAR?
               </p>
               <label htmlFor="uar-yes" className="mr-4">
@@ -95,26 +103,44 @@ const CloseAccountModal = ({ closeModal }) => {
               </label>
             </div>
 
-            <label
-              htmlFor="reason"
-              className="block mt-6 mb-2 text-sm font-semibold text-gray-400"
-            >
+            <p className="block mt-6 text-sm font-normal text-gray-400">
               Reason
-            </label>
-            <input
-              type="text"
-              id="reason"
-              name="reason"
-              className="appearance-none border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-indigo-500 w-full"
-              placeholder="Enter your reason"
-              onChange={(e) => {
-                setAccountData((prev) => ({ ...prev, reason: e.target.value }));
-              }}
-            />
+            </p>
+            <div className="relative flex flex-col items-center rounded mt-1.5 px-2 w-full">
+              <button
+                className="bg-white border border-gray-300 text-black p-2 w-full text-left items-center justify-between font-normal text-sm rounded-lg flex gap-1.5"
+                onClick={(e) => {
+                  setOpenReasonTab((prev) => !prev);
+                  e.stopPropagation();
+                }}
+              >
+                <span className="flex-grow">{accountData.reason}</span>
+                <span>
+                  {openReasonTab ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                </span>
+              </button>
+
+              {openReasonTab && (
+                <div className="bg-white z-10 absolute top-10 p-2 text-slate-500 font-medium text-sm w-full border border-slate-200 rounded-lg ">
+                  {ReasonValues.map((value, index) => (
+                    <div
+                      onClick={() => {
+                        setAccountData((prev) => ({ ...prev, reason: value }));
+                        setOpenReasonTab(false);
+                      }}
+                      className="p-1.5 cursor-pointer hover:bg-indigo-100 hover:text-black rounded-lg"
+                      key={index}
+                    >
+                      <h3>{value}</h3>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <label
               htmlFor="note"
-              className="block mt-6 mb-2 text-sm font-semibold text-gray-400"
+              className="block mt-6 mb-2 text-sm font-normal text-gray-400"
             >
               Note
             </label>
@@ -155,7 +181,7 @@ const CloseAccountModal = ({ closeModal }) => {
               disabled={!isFormFilled()}
               style={{
                 backgroundColor: isFormFilled() ? "#5234f8" : "#E4E4E4",
-                color: isFormFilled() ? "white" : "#ADADAD"
+                color: isFormFilled() ? "white" : "#ADADAD",
               }}
               className="px-8 py-4 rounded-lg text-sm font-medium"
             >
