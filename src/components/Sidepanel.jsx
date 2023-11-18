@@ -10,7 +10,7 @@ import { MdReportGmailerrorred } from "react-icons/md";
 
 const Sidepanel = () => {
   return (
-    <div className="sm:max-w-[258px] max-w-[50px] flex flex-col h-screen sm:p-[32px] items-center justify-between border-r-2 border-gray-500 fixed">
+    <div className="sm:max-w-[258px] max-w-[50px] flex flex-col h-screen sm:p-[32px] items-center justify-between border-r-2 border-neutral-200 fixed">
       
       <div className="sm:w-[194px] flex flex-col items-center gap-[48px] ">
         <div>

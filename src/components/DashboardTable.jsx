@@ -1,19 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { RiExternalLinkLine } from "react-icons/ri";
 import { FaCircle } from "react-icons/fa";
 import UpDownIcon from "../assets/UpDownIcon.svg";
 const DashboardTable = ({ selectedTab, DashboardData }) => {
+  const[dataToShow,setShowData]=useState(DashboardData);
+  const [sortType,setSortType]=useState({queue:false});
+
+
+
+  const sortByQueue=()=>{
+    // if(sortType.queue){
+    //   let temp=[...dataToShow].sort((a,b)=>b.queueFor-a.queueFor);
+    // setShowData(temp);
+    // setSortType(prev=>({...prev,queue:!prev.queue}))
+    // }
+    // else{
+    //   let temp=[...dataToShow].sort((a,b)=>a.queueFor-b.queueFor);
+    // setShowData(temp)
+    // setSortType(prev=>({...prev,queue:!prev.queue}))
+    // }
+  }
   return (
     <>
-      <div className="overflow-x-auto sm:overflow-x-hidden w-full mt-5">
+      <div className="overflow-x-auto sm:overflow-x-hidden w-full my-5">
         {DashboardData?.length > 0 ? (
           <table className="text-gray-500  w-full border border-slate-200">
-            <thead className="text-xs text-black font-medium text-left bg-neutral-100 border border-slate-300 ">
+            <thead className="text-xs text-black font-medium text-left bg-gray-100 border border-slate-300 ">
               <tr>
                 <th className=" px-6 py-3">User</th>
 
                 <th className=" px-6">
-                  <span className="flex gap-1  ">
+                  <span className="flex gap-1 items-center">
                     Risk level
                     <img
                       className="cursor-pointer"
@@ -27,10 +44,10 @@ const DashboardTable = ({ selectedTab, DashboardData }) => {
                   <th className=" px-6">Trigger reason</th>
                 )}
                 {selectedTab === "Pending" && (
-                  <th className="  px-6">
-                    <p className="flex gap-1 ">
+                  <th className="px-6">
+                    <p className="flex gap-1 items-center">
                       In queue for
-                      <img className="h-4" src={UpDownIcon} alt="UpDownIcon" />
+                      <img onClick={()=>sortByQueue()} className="h-4" src={UpDownIcon} alt="UpDownIcon" />
                     </p>
                   </th>
                 )}
@@ -41,7 +58,7 @@ const DashboardTable = ({ selectedTab, DashboardData }) => {
 
                 {selectedTab === "Completed" && (
                   <th className=" pl-3 pr-6">
-                    <p className="flex  gap-1">
+                    <p className="flex  gap-1 items-center">
                       Time to close
                       <img className="h-4" src={UpDownIcon} alt="UpDownIcon" />
                     </p>
@@ -49,7 +66,7 @@ const DashboardTable = ({ selectedTab, DashboardData }) => {
                 )}
 
                 <th className="">
-                  <p className="flex gap-1">
+                  <p className="flex gap-1 items-center">
                     Date added on
                     <img className="h-4" src={UpDownIcon} alt="UpDownIcon" />
                   </p>
