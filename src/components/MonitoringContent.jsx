@@ -15,6 +15,9 @@ const MonitoringContent = () => {
   const [actionFilterValue, setActionFilterValue] = useState(null);
   const [selectedRiskValue, setSelectedRiskValue] = useState(null);
 
+  //state to manage sorting
+  const [selectedSortType,setSelectedSortType]=useState({queue:null});
+
   const handelTabChange = (newTabValue) => {
     setSelectedTab(newTabValue);
     setTriggerFilterValue(null);
@@ -52,10 +55,29 @@ const MonitoringContent = () => {
       finalResult = finalResult.filter(
         ({ riskLevel }) => riskLevel === selectedRiskValue
       );
+
+    }
+
+    if(selectedSortType.queue){
+      
+         if(selectedSortType.queue==="decreasing"){
+          finalResult=[...finalResult].sort((a,b)=>b.queueFor-a.queueFor);
+        
+         }
+         else if(selectedSortType.queue==="increasing"){
+          finalResult=[...finalResult].sort((a,b)=>a.queueFor-b.queueFor);
+         
+         }
+      
     }
 
     return finalResult;
   };
+
+// function to enable sorting wrt In queue for
+  const sortByQueue=()=>{
+    setSelectedSortType(prev=>({...prev,queue:selectedSortType.queue==="decreasing"?"increasing":"decreasing"}))
+  }
 
   let DashboardData = filteredData();
 
@@ -80,7 +102,7 @@ const MonitoringContent = () => {
         setSelectedRiskValue={setSelectedRiskValue}
       />
 
-      <DashboardTable selectedTab={selectedTab} DashboardData={DashboardData} />
+      <DashboardTable selectedTab={selectedTab} DashboardData={DashboardData} sortByQueue={sortByQueue} />
 
       {showModal && <CloseAccountModal closeModal={closeModal} />}
     </div>

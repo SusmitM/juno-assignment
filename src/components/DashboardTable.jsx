@@ -2,24 +2,7 @@ import React, { useState } from "react";
 import { RiExternalLinkLine } from "react-icons/ri";
 import { FaCircle } from "react-icons/fa";
 import UpDownIcon from "../assets/UpDownIcon.svg";
-const DashboardTable = ({ selectedTab, DashboardData }) => {
-  const[dataToShow,setShowData]=useState(DashboardData);
-  const [sortType,setSortType]=useState({queue:false});
-
-
-
-  const sortByQueue=()=>{
-    // if(sortType.queue){
-    //   let temp=[...dataToShow].sort((a,b)=>b.queueFor-a.queueFor);
-    // setShowData(temp);
-    // setSortType(prev=>({...prev,queue:!prev.queue}))
-    // }
-    // else{
-    //   let temp=[...dataToShow].sort((a,b)=>a.queueFor-b.queueFor);
-    // setShowData(temp)
-    // setSortType(prev=>({...prev,queue:!prev.queue}))
-    // }
-  }
+const DashboardTable = ({ selectedTab, DashboardData,sortByQueue }) => {
   return (
     <>
       <div className="overflow-x-auto sm:overflow-x-hidden w-full my-5">
