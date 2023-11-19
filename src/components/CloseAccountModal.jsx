@@ -27,6 +27,7 @@ const CloseAccountModal = ({ closeModal }) => {
   const handelFormSubmit = (e) => {
     e.preventDefault();
     if (isFormFilled()) {
+      alert(`Your Request To Close Account With Email: ${accountData?.email} Has Been Received`)
       closeModal();
     }
   };

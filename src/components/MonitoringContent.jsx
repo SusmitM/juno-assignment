@@ -27,6 +27,11 @@ const MonitoringContent = () => {
     setTriggerFilterValue(null);
     setActionFilterValue(null);
     setSelectedRiskValue(null);
+    setSelectedSortType({
+      queue: null,
+      closeTime: null,
+      riskType:null
+    })
   };
   const openModal = () => {
     setShowModal(true);
