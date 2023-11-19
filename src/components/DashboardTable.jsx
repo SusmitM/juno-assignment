@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { RiExternalLinkLine } from "react-icons/ri";
 import { FaCircle } from "react-icons/fa";
 import UpDownIcon from "../assets/UpDownIcon.svg";

@@ -6,7 +6,9 @@ import DashboardTable from "./DashboardTable";
 import { MonitoringData } from "../Data/MonitoringData";
 import DashboardFilters from "./DashboardFilters";
 const MonitoringContent = () => {
+  // state to manage selected tab
   const [selectedTab, setSelectedTab] = useState("Pending");
+  // state to manage close account modal visibility
   const [showModal, setShowModal] = useState(false);
 
   //states to manage Filters
@@ -19,9 +21,10 @@ const MonitoringContent = () => {
   const [selectedSortType, setSelectedSortType] = useState({
     queue: null,
     closeTime: null,
-    riskType:null
+    riskType: null,
   });
 
+  //function to switch tabs
   const handelTabChange = (newTabValue) => {
     setSelectedTab(newTabValue);
     setTriggerFilterValue(null);
@@ -30,9 +33,10 @@ const MonitoringContent = () => {
     setSelectedSortType({
       queue: null,
       closeTime: null,
-      riskType:null
-    })
+      riskType: null,
+    });
   };
+
   const openModal = () => {
     setShowModal(true);
   };
@@ -41,10 +45,11 @@ const MonitoringContent = () => {
     setShowModal(false);
   };
 
-// Sorting Order For RiskLevel
-  const riskOrderHtL = ['High', 'Medium', 'Low'];
-  const riskOrderLtH = ['Low', 'Medium', 'High'];
+  // Sorting Order For RiskLevel
+  const riskOrderHtL = ["High", "Medium", "Low"];
+  const riskOrderLtH = ["Low", "Medium", "High"];
 
+  // function to filter Data based on selected filters
   const filteredData = () => {
     let finalResult = MonitoringData;
 
@@ -91,19 +96,16 @@ const MonitoringContent = () => {
     }
 
     // sort by risk level
-    if(selectedSortType.riskType){
+    if (selectedSortType.riskType) {
       let sortOrder;
-      if (selectedSortType.riskType==="HtL") {
+      if (selectedSortType.riskType === "HtL") {
         sortOrder = riskOrderHtL;
-
-      } else if (selectedSortType.riskType==="LtH") {
+      } else if (selectedSortType.riskType === "LtH") {
         sortOrder = riskOrderLtH;
-       
       }
-      finalResult=[...finalResult].sort((a, b) => {
+      finalResult = [...finalResult].sort((a, b) => {
         return sortOrder.indexOf(a.riskLevel) - sortOrder.indexOf(b.riskLevel);
       });
-
     }
 
     return finalResult;
@@ -127,17 +129,13 @@ const MonitoringContent = () => {
           : "decreasing",
     }));
   };
-   // function to enable sorting wrt Risk Level
-  const sortByRiskLevel= () => {
+  // function to enable sorting wrt Risk Level
+  const sortByRiskLevel = () => {
     setSelectedSortType((prev) => ({
       ...prev,
-      riskType:
-        selectedSortType.riskType === "HtL"
-          ? "LtH"
-          : "HtL",
+      riskType: selectedSortType.riskType === "HtL" ? "LtH" : "HtL",
     }));
   };
-
 
   return (
     <div className="sm:ml-72 sm:mr-12 ml-16 mx-2 w-full overflow-x-hidden">
