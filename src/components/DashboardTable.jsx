@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { RiExternalLinkLine } from "react-icons/ri";
 import { FaCircle } from "react-icons/fa";
 import UpDownIcon from "../assets/UpDownIcon.svg";
-const DashboardTable = ({ selectedTab, DashboardData,sortByQueue }) => {
+const DashboardTable = ({ selectedTab, DashboardData,sortByQueue,sortByClosingTime,sortByRiskLevel }) => {
   return (
     <>
       <div className="overflow-x-auto sm:overflow-x-hidden w-full my-5">
-        {DashboardData?.length > 0 ? (
+        {DashboardData()?.length > 0 ? (
           <table className="text-gray-500  w-full border border-slate-200">
             <thead className="text-xs text-black font-medium text-left bg-gray-100 border border-slate-300 ">
               <tr>
@@ -16,9 +16,10 @@ const DashboardTable = ({ selectedTab, DashboardData,sortByQueue }) => {
                   <span className="flex gap-1 items-center">
                     Risk level
                     <img
-                      className="cursor-pointer"
+                     className="h-4 cursor-pointer"
                       src={UpDownIcon}
                       alt="UpDownIcon"
+                      onClick={()=>sortByRiskLevel()}
                     />
                   </span>
                 </th>
@@ -30,7 +31,7 @@ const DashboardTable = ({ selectedTab, DashboardData,sortByQueue }) => {
                   <th className="px-6">
                     <p className="flex gap-1 items-center">
                       In queue for
-                      <img onClick={()=>sortByQueue()} className="h-4" src={UpDownIcon} alt="UpDownIcon" />
+                      <img onClick={()=>sortByQueue()} className="h-4 cursor-pointer" src={UpDownIcon} alt="UpDownIcon" />
                     </p>
                   </th>
                 )}
@@ -43,7 +44,7 @@ const DashboardTable = ({ selectedTab, DashboardData,sortByQueue }) => {
                   <th className=" pl-3 pr-6">
                     <p className="flex  gap-1 items-center">
                       Time to close
-                      <img className="h-4" src={UpDownIcon} alt="UpDownIcon" />
+                      <img onClick={()=>sortByClosingTime()} className="h-4 cursor-pointer" src={UpDownIcon} alt="UpDownIcon" />
                     </p>
                   </th>
                 )}
@@ -65,7 +66,7 @@ const DashboardTable = ({ selectedTab, DashboardData,sortByQueue }) => {
             </thead>
 
             <tbody>
-              {DashboardData?.map((data) => {
+              {DashboardData()?.map((data) => {
                 return (
                   <tr className="bg-white border-b text-center " key={data.id}>
                     <td className="flex items-center justify-between  text-left  pl-6 pr-4  py-4">
@@ -123,7 +124,7 @@ const DashboardTable = ({ selectedTab, DashboardData,sortByQueue }) => {
                       </td>
                     )}
                     <td className="font-medium text-sm text-left  ">
-                      {data.dateAdded}
+                      {(data.dateAdded)}
                     </td>
 
                     {selectedTab === "Pending" && (

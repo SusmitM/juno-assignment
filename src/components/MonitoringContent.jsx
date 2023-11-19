@@ -16,7 +16,11 @@ const MonitoringContent = () => {
   const [selectedRiskValue, setSelectedRiskValue] = useState(null);
 
   //state to manage sorting
-  const [selectedSortType,setSelectedSortType]=useState({queue:null});
+  const [selectedSortType, setSelectedSortType] = useState({
+    queue: null,
+    closeTime: null,
+    riskType:null
+  });
 
   const handelTabChange = (newTabValue) => {
     setSelectedTab(newTabValue);
@@ -31,6 +35,10 @@ const MonitoringContent = () => {
   const closeModal = () => {
     setShowModal(false);
   };
+
+// Sorting Order For RiskLevel
+  const riskOrderHtL = ['High', 'Medium', 'Low'];
+  const riskOrderLtH = ['Low', 'Medium', 'High'];
 
   const filteredData = () => {
     let finalResult = MonitoringData;
@@ -55,31 +63,76 @@ const MonitoringContent = () => {
       finalResult = finalResult.filter(
         ({ riskLevel }) => riskLevel === selectedRiskValue
       );
-
+    }
+    // sort wrt Queue
+    if (selectedSortType.queue) {
+      if (selectedSortType.queue === "decreasing") {
+        finalResult = [...finalResult].sort((a, b) => b.queueFor - a.queueFor);
+      } else if (selectedSortType.queue === "increasing") {
+        finalResult = [...finalResult].sort((a, b) => a.queueFor - b.queueFor);
+      }
+    }
+    //sort by close time
+    if (selectedSortType.closeTime) {
+      if (selectedSortType.closeTime === "decreasing") {
+        finalResult = [...finalResult].sort(
+          (a, b) => b.timeToClose - a.timeToClose
+        );
+      } else if (selectedSortType.closeTime === "increasing") {
+        finalResult = [...finalResult].sort(
+          (a, b) => a.timeToClose - b.timeToClose
+        );
+      }
     }
 
-    if(selectedSortType.queue){
-      
-         if(selectedSortType.queue==="decreasing"){
-          finalResult=[...finalResult].sort((a,b)=>b.queueFor-a.queueFor);
-        
-         }
-         else if(selectedSortType.queue==="increasing"){
-          finalResult=[...finalResult].sort((a,b)=>a.queueFor-b.queueFor);
-         
-         }
-      
+    // sort by risk level
+    if(selectedSortType.riskType){
+      let sortOrder;
+      if (selectedSortType.riskType==="HtL") {
+        sortOrder = riskOrderHtL;
+
+      } else if (selectedSortType.riskType==="LtH") {
+        sortOrder = riskOrderLtH;
+       
+      }
+      finalResult=[...finalResult].sort((a, b) => {
+        return sortOrder.indexOf(a.riskLevel) - sortOrder.indexOf(b.riskLevel);
+      });
+
     }
 
     return finalResult;
   };
 
-// function to enable sorting wrt In queue for
-  const sortByQueue=()=>{
-    setSelectedSortType(prev=>({...prev,queue:selectedSortType.queue==="decreasing"?"increasing":"decreasing"}))
-  }
+  // function to enable sorting wrt In queue for
+  const sortByQueue = () => {
+    setSelectedSortType((prev) => ({
+      ...prev,
+      queue:
+        selectedSortType.queue === "decreasing" ? "increasing" : "decreasing",
+    }));
+  };
+  // function to enable sorting wrt Time to close
+  const sortByClosingTime = () => {
+    setSelectedSortType((prev) => ({
+      ...prev,
+      closeTime:
+        selectedSortType.closeTime === "decreasing"
+          ? "increasing"
+          : "decreasing",
+    }));
+  };
+   // function to enable sorting wrt Risk Level
+  const sortByRiskLevel= () => {
+    setSelectedSortType((prev) => ({
+      ...prev,
+      riskType:
+        selectedSortType.riskType === "HtL"
+          ? "LtH"
+          : "HtL",
+    }));
+  };
 
-  let DashboardData = filteredData();
 
   return (
     <div className="sm:ml-72 sm:mr-12 ml-16 mx-2 w-full overflow-x-hidden">
@@ -102,7 +155,13 @@ const MonitoringContent = () => {
         setSelectedRiskValue={setSelectedRiskValue}
       />
 
-      <DashboardTable selectedTab={selectedTab} DashboardData={DashboardData} sortByQueue={sortByQueue} />
+      <DashboardTable
+        selectedTab={selectedTab}
+        DashboardData={filteredData}
+        sortByQueue={sortByQueue}
+        sortByClosingTime={sortByClosingTime}
+        sortByRiskLevel={sortByRiskLevel}
+      />
 
       {showModal && <CloseAccountModal closeModal={closeModal} />}
     </div>
