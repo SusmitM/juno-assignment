@@ -34,6 +34,10 @@ Live Link: https://juno-assignment-susmit.vercel.app/
 -![image](https://github.com/SusmitM/juno-assignment/assets/75859651/b233d52f-08d0-41ee-8b07-48ce00b2c3dd)
 -![image](https://github.com/SusmitM/juno-assignment/assets/75859651/83436e76-834d-4599-84be-424a95514078)
 
+## Working Video
+[screen-capture.webm](https://github.com/SusmitM/juno-assignment/assets/75859651/6358fc93-d869-422a-91d1-f34e838c7ee2)
+
+
 
 
 
